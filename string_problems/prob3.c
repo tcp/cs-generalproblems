@@ -2,6 +2,8 @@
 #include <stdlib.h>
 #include <stdint.h>
 
+#define NUM_TABLE_CHARS 256 // # ASCII Table
+
 /* Problem 3
  * Design an algorithm and write code to remove the duplicate characters
  * in a string without using any additional buffer. NOTE: One or two 
@@ -10,7 +12,7 @@
  * Write the test cases for this method.
  */
 
-// My first idea To solve this, I assumed it is only letters present in the
+// To solve this, in order, I assumed it is only letters present in the
 // string which makes it easier to provide a quick answer. Also, assumed
 // ASCII encoding. I tried to avoid using an int array representing the symbols
 // in the ASCII table, just to do it differently. The solution with the array is
@@ -24,7 +26,7 @@
 // If a character has already been used, it is just discarded.
 void removeDuplicates(char* string) {
   uint64_t bitCheck = 0;
-  int stop = 0;
+  int stop = 0; 
   int i;
 
   for (i = 0; string[i] != '\0'; i++) {
@@ -36,6 +38,22 @@ void removeDuplicates(char* string) {
   }
 
   // ends the string at the proper place
+  string[stop] = '\0';
+}
+
+// removes duplicate using int array that represents the encoding table
+void removeDuplicatesWithArray(char* string) {
+  int chars[NUM_TABLE_CHARS] = { 0 };
+  int stop = 0;
+  int i;
+
+  for (i = 0; string[i] != '\0'; i++) {
+    if (!chars[string[i]]) {
+      chars[string[i]] = 1;
+      string[stop++] = string[i];
+    }
+  }
+
   string[stop] = '\0';
 }
 
